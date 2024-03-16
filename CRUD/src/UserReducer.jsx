@@ -6,3 +6,5 @@ const userSlice = createSlice({
   initialState: userList,
   reducers: {},
 });
+
+export const { reducer: userReducer } = userSlice;
