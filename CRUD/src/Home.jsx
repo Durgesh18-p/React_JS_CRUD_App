@@ -1,13 +1,19 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { deleteUser } from "./UserReducer";
 
 const Home = () => {
-  const user = useSelector((state) => state.user);
-  console.log(user);
+  const users = useSelector((state) => state.user);
+  const dispatch = useDispatch();
+
+  const handleDelete = (user) => {
+    dispatch(deleteUser({ id: user.id }));
+    console.log("delete clicked");
+  };
 
   return (
     <div className="container">
-      <h2>CRUD app with JSONserver</h2>
+      <h2>CRUD app in React JS and Redux Tool-kit</h2>
       <Link to="/create" className="btn btn-success mty-3">
         create +
       </Link>
@@ -21,7 +27,7 @@ const Home = () => {
           </tr>
         </thead>
         <tbody>
-          {user.map((user, index) => (
+          {users.map((user, index) => (
             <tr key={index}>
               <td>{user.id}</td>
               <td>{user.name}</td>
@@ -35,7 +41,12 @@ const Home = () => {
                 </Link>
               </td>
               <td>
-                <button className="btn btn-sm btn-danger ms-2">Danger</button>
+                <button
+                  className="btn btn-sm btn-danger ms-2"
+                  onClick={() => handleDelete(user)}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
